@@ -1,185 +1,940 @@
-<!doctype html>
-<html lang="nl">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bronsaer Capital — Amsterdam</title>
-  <meta name="description" content="Bronsaer Capital is een Amsterdam-based fonds in opbouw met focus op shortstrategieën, ETF-stabilisatie en strikt risicobeheer.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bronsaer Capital — B2B SaaS Venture Builder · Amsterdam</title>
+<meta name="description" content="Bronsaer Capital builds category-defining B2B SaaS companies in fragmented European markets. Amsterdam-based. First venture: CamperVault.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ── */
+:root {
+  --void:    #060608;
+  --surface: #0C0C10;
+  --lift:    #131318;
+  --border:  rgba(255,255,255,.07);
+  --border2: rgba(255,255,255,.12);
+  --text:    #FAFAF9;
+  --muted:   rgba(250,250,249,.45);
+  --faint:   rgba(250,250,249,.18);
+  --gold:    #C8A96E;
+  --gold2:   #E8C98E;
+  --gold-bg: rgba(200,169,110,.08);
+  --gold-border: rgba(200,169,110,.2);
+  --teal:    #4ECDC4;
+  --teal-bg: rgba(78,205,196,.06);
+  --r:       8px;
+}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  font-family:'Cabinet Grotesk',sans-serif;
+  background:var(--void);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  cursor:none;
+}
+a{text-decoration:none;color:inherit;}
 
-  <link rel="stylesheet" href="./styles.css">
+/* ── CUSTOM CURSOR ── */
+.cursor{
+  position:fixed;width:10px;height:10px;
+  background:var(--gold);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .1s,width .2s,height .2s,opacity .2s;
+  mix-blend-mode:screen;
+}
+.cursor-ring{
+  position:fixed;width:36px;height:36px;
+  border:1px solid var(--gold-border);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .25s cubic-bezier(.25,.46,.45,.94),width .3s,height .3s;
+}
+body:has(a:hover) .cursor{width:16px;height:16px;}
+body:has(a:hover) .cursor-ring{width:52px;height:52px;border-color:var(--gold);}
 
-  <!-- Icons (root) -->
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="./favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="apple-touch-icon" href="./apple-touch-icon.png" sizes="180x180">
+/* ── NOISE OVERLAY ── */
+body::before{
+  content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.028;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3.5rem;height:68px;
+  border-bottom:1px solid var(--border);
+  background:rgba(6,6,8,.85);
+  backdrop-filter:blur(20px) saturate(180%);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:12px;
+  font-family:'Clash Display',sans-serif;
+  font-weight:600;font-size:.95rem;letter-spacing:.01em;
+}
+.nav-logo-mark{
+  width:28px;height:28px;border-radius:6px;
+  background:linear-gradient(135deg,var(--gold) 0%,#8B6914 100%);
+  display:grid;place-items:center;
+  font-size:11px;font-weight:700;color:#060608;
+  letter-spacing:-.02em;
+}
+.nav-pill{
+  font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--gold-border);
+  padding:2px 8px;border-radius:99px;margin-left:2px;
+}
+.nav-links{display:flex;gap:2.5rem;align-items:center;}
+.nav-links a{
+  font-size:.8rem;color:var(--muted);letter-spacing:.04em;
+  text-transform:uppercase;font-weight:500;
+  transition:color .15s;position:relative;
+}
+.nav-links a:hover{color:var(--text);}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;
+  height:1px;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .2s;
+}
+.nav-links a:hover::after{transform:scaleX(1);}
+.nav-cta{
+  font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--gold-border);
+  padding:.45rem 1.25rem;border-radius:99px;
+  background:var(--gold-bg);
+  transition:all .2s;font-weight:500;
+}
+.nav-cta:hover{background:var(--gold);color:var(--void);border-color:var(--gold);}
+
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;
+  padding:8rem 3.5rem 5rem;
+  overflow:hidden;
+}
+
+/* Animated grid */
+.hero-grid{
+  position:absolute;inset:0;z-index:0;
+  background-image:
+    linear-gradient(var(--border) 1px,transparent 1px),
+    linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 0%,transparent 100%);
+}
+
+/* Orbs */
+.orb{
+  position:absolute;border-radius:50%;
+  filter:blur(120px);pointer-events:none;
+}
+.orb-1{
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(200,169,110,.12) 0%,transparent 70%);
+  top:-200px;right:-100px;
+  animation:orbFloat 12s ease-in-out infinite;
+}
+.orb-2{
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(78,205,196,.06) 0%,transparent 70%);
+  bottom:-100px;left:-100px;
+  animation:orbFloat 16s ease-in-out infinite reverse;
+}
+@keyframes orbFloat{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(30px,-20px) scale(1.05);}
+  66%{transform:translate(-20px,30px) scale(.95);}
+}
+
+.hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;width:100%;}
+
+/* Eyebrow */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-bottom:2.5rem;
+  font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);font-weight:500;
+}
+.eyebrow-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.8);}}
+
+/* Hero heading */
+.hero h1{
+  font-family:'Clash Display',sans-serif;
+  font-weight:700;
+  font-size:clamp(3rem,6vw,5.5rem);
+  line-height:1.01;
+  letter-spacing:-.04em;
+  max-width:900px;
+  margin-bottom:2.5rem;
+}
+.hero h1 .line{display:block;overflow:hidden;}
+.hero h1 .line span{
+  display:inline-block;
+  animation:slideUp .8s cubic-bezier(.16,1,.3,1) both;
+}
+.hero h1 .line:nth-child(2) span{animation-delay:.1s;}
+.hero h1 .line:nth-child(3) span{animation-delay:.2s;}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 50%,var(--gold) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  background-size:200% auto;
+  animation:shimmer 4s linear infinite;
+}
+@keyframes shimmer{to{background-position:200% center;}}
+
+.hero-sub{
+  font-size:1.1rem;color:var(--muted);
+  font-weight:300;line-height:1.8;
+  max-width:560px;margin-bottom:3rem;
+  animation:fadeUp .8s .4s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+.hero-actions{
+  display:flex;align-items:center;gap:1.25rem;
+  animation:fadeUp .8s .55s cubic-bezier(.16,1,.3,1) both;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--gold);color:var(--void);
+  padding:.75rem 1.75rem;border-radius:99px;
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-size:.85rem;font-weight:700;letter-spacing:.03em;
+  transition:all .2s;
+  box-shadow:0 0 40px rgba(200,169,110,.2);
+}
+.btn-primary:hover{
+  background:var(--gold2);
+  transform:translateY(-2px);
+  box-shadow:0 8px 40px rgba(200,169,110,.35);
+}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--muted);font-size:.85rem;font-weight:500;
+  transition:color .15s;
+}
+.btn-ghost:hover{color:var(--text);}
+.btn-arrow{
+  width:28px;height:28px;border-radius:50%;
+  border:1px solid var(--border2);
+  display:grid;place-items:center;font-size:.75rem;
+  transition:all .2s;
+}
+.btn-ghost:hover .btn-arrow{border-color:var(--gold);color:var(--gold);}
+
+/* Hero stats */
+.hero-stats{
+  display:flex;gap:0;margin-top:5rem;
+  border-top:1px solid var(--border);
+  animation:fadeUp .8s .7s cubic-bezier(.16,1,.3,1) both;
+}
+.hero-stat{
+  flex:1;padding:2rem 0;
+  border-right:1px solid var(--border);
+}
+.hero-stat:last-child{border-right:none;}
+.stat-num{
+  font-family:'Clash Display',sans-serif;
+  font-weight:700;font-size:2.2rem;
+  color:var(--text);line-height:1;
+  margin-bottom:.4rem;
+}
+.stat-num .accent{color:var(--gold);}
+.stat-label{font-size:.75rem;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;}
+
+/* ── SECTION BASE ── */
+section{padding:8rem 3.5rem;}
+.container{max-width:1200px;margin:0 auto;}
+.section-eye{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);font-weight:500;margin-bottom:1.25rem;
+}
+.section-eye::before{content:'';width:20px;height:1px;background:var(--gold);}
+h2{
+  font-family:'Clash Display',sans-serif;
+  font-weight:700;font-size:clamp(2rem,3.5vw,3rem);
+  line-height:1.05;letter-spacing:-.03em;
+}
+
+/* ── THESIS ── */
+.thesis{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.thesis-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;}
+.thesis-left h2{margin-bottom:1.75rem;}
+.thesis-left p{font-size:1rem;color:var(--muted);line-height:1.85;margin-bottom:1.25rem;}
+.thesis-pillars{display:flex;flex-direction:column;}
+.pillar{
+  padding:1.5rem 0;
+  border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:28px 1fr;gap:1.25rem;
+}
+.pillar:first-child{border-top:1px solid var(--border);}
+.pillar-num{
+  font-family:'Clash Display',sans-serif;
+  font-size:.7rem;font-weight:600;
+  color:var(--gold);padding-top:3px;
+  letter-spacing:.06em;
+}
+.pillar-title{font-weight:700;font-size:.95rem;margin-bottom:.3rem;letter-spacing:-.01em;}
+.pillar-desc{font-size:.85rem;color:var(--muted);line-height:1.65;}
+
+/* ── PORTFOLIO ── */
+.portfolio-section{background:var(--void);}
+.portfolio-header{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:3.5rem;
+}
+.portfolio-count{
+  font-family:'Clash Display',sans-serif;
+  font-size:4rem;font-weight:700;
+  color:var(--border2);letter-spacing:-.06em;
+  line-height:1;
+}
+.portfolio-cards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
+.port-card{
+  background:var(--void);padding:3rem;
+  position:relative;overflow:hidden;
+  transition:background .2s;
+}
+.port-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--gold-bg) 0%,transparent 60%);
+  opacity:0;transition:opacity .3s;
+}
+.port-card:hover{background:var(--surface);}
+.port-card:hover::before{opacity:1;}
+.port-card-inner{position:relative;z-index:1;}
+.port-status{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:600;margin-bottom:2rem;
+}
+.status-live{color:var(--teal);}
+.status-live::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite;}
+.status-next{color:var(--faint);}
+.status-next::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--faint);}
+.port-logo{
+  width:52px;height:52px;border-radius:10px;
+  border:1px solid var(--border2);
+  display:grid;place-items:center;
+  font-family:'Clash Display',sans-serif;font-weight:700;
+  font-size:1.1rem;color:var(--gold);
+  margin-bottom:1.5rem;
+  background:linear-gradient(135deg,var(--gold-bg),transparent);
+}
+.port-name{
+  font-family:'Clash Display',sans-serif;
+  font-weight:700;font-size:1.6rem;
+  letter-spacing:-.03em;margin-bottom:.25rem;
+}
+.port-domain{
+  font-size:.75rem;color:var(--faint);
+  letter-spacing:.04em;margin-bottom:1.25rem;
+  font-family:'Cabinet Grotesk',sans-serif;
+}
+.port-desc{
+  font-size:.9rem;color:var(--muted);
+  line-height:1.75;margin-bottom:1.75rem;
+}
+.port-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.75rem;}
+.port-tag{
+  font-size:.65rem;padding:3px 10px;border-radius:99px;
+  border:1px solid var(--border2);color:var(--faint);
+  letter-spacing:.06em;text-transform:uppercase;font-weight:500;
+}
+.port-tag.highlight{border-color:var(--gold-border);color:var(--gold);}
+.port-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.8rem;color:var(--gold);font-weight:600;
+  letter-spacing:.02em;
+  transition:gap .2s;
+}
+.port-link:hover{gap:10px;}
+.port-placeholder{opacity:.35;}
+.port-placeholder:hover{background:var(--void);}
+.port-placeholder:hover::before{opacity:0;}
+.port-qs{
+  font-size:5rem;font-family:'Clash Display',sans-serif;
+  font-weight:700;color:var(--border);
+  line-height:1;margin-bottom:1.5rem;
+}
+
+/* ── APPROACH ── */
+.approach-section{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+}
+.approach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:4rem;}
+.approach-card{
+  background:var(--surface);padding:2.5rem;
+  transition:background .2s;
+}
+.approach-card:hover{background:var(--lift);}
+.approach-num{
+  font-family:'Clash Display',sans-serif;
+  font-size:3rem;font-weight:700;
+  color:var(--border2);line-height:1;
+  margin-bottom:1.5rem;letter-spacing:-.04em;
+}
+.approach-title{
+  font-family:'Clash Display',sans-serif;
+  font-weight:600;font-size:1.05rem;
+  margin-bottom:.75rem;letter-spacing:-.02em;
+}
+.approach-desc{font-size:.85rem;color:var(--muted);line-height:1.7;}
+
+/* ── MARQUEE ── */
+.marquee-section{
+  padding:2rem 0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:var(--void);overflow:hidden;
+}
+.marquee-track{
+  display:flex;gap:3rem;
+  white-space:nowrap;
+  animation:marquee 25s linear infinite;
+}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.marquee-item{
+  font-family:'Clash Display',sans-serif;
+  font-size:1.1rem;font-weight:600;
+  color:var(--faint);letter-spacing:.04em;
+  text-transform:uppercase;white-space:nowrap;
+  display:flex;align-items:center;gap:3rem;
+}
+.marquee-sep{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--gold);opacity:.4;flex-shrink:0;
+}
+
+/* ── CONTACT ── */
+.contact-section{
+  background:var(--void);
+  border-top:1px solid var(--border);
+}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;}
+.contact-left h2{margin-bottom:1.5rem;}
+.contact-left p{color:var(--muted);line-height:1.85;font-size:.95rem;margin-bottom:2.5rem;}
+.contact-details{display:flex;flex-direction:column;gap:1.25rem;}
+.cd{display:flex;flex-direction:column;gap:.25rem;}
+.cd-label{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:500;}
+.cd-val{font-size:.95rem;color:var(--muted);}
+.cd-val a{color:var(--gold);transition:opacity .15s;}
+.cd-val a:hover{opacity:.7;}
+.contact-form{display:flex;flex-direction:column;gap:.85rem;}
+.cf-field{
+  padding:.85rem 1.1rem;
+  background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--r);
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-size:.9rem;color:var(--text);
+  outline:none;
+  transition:border-color .15s,background .15s;
+  width:100%;
+}
+.cf-field:focus{border-color:var(--gold-border);background:var(--lift);}
+.cf-field::placeholder{color:var(--faint);}
+select.cf-field{cursor:pointer;-webkit-appearance:none;appearance:none;}
+textarea.cf-field{resize:vertical;min-height:110px;}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;}
+.cf-submit{
+  background:var(--gold);color:var(--void);border:none;
+  padding:.85rem 2rem;border-radius:99px;
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-size:.85rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;cursor:pointer;
+  transition:all .2s;align-self:flex-start;
+  box-shadow:0 0 30px rgba(200,169,110,.15);
+}
+.cf-submit:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:0 6px 30px rgba(200,169,110,.25);}
+.cf-success{
+  display:none;color:var(--gold);
+  font-size:.9rem;padding:.85rem 0;
+}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);
+  padding:2.5rem 3.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;background:var(--void);
+}
+.footer-logo{
+  font-family:'Clash Display',sans-serif;
+  font-weight:600;font-size:.9rem;
+  display:flex;align-items:center;gap:10px;
+}
+.footer-mark{
+  width:22px;height:22px;border-radius:5px;
+  background:linear-gradient(135deg,var(--gold),#8B6914);
+  display:grid;place-items:center;
+  font-size:9px;font-weight:700;color:var(--void);
+}
+footer p{font-size:.72rem;color:var(--faint);letter-spacing:.04em;}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-links a{font-size:.72rem;color:var(--faint);letter-spacing:.04em;transition:color .15s;}
+.footer-links a:hover{color:var(--gold);}
+
+/* ── FOUNDER ── */
+.founder-section{background:var(--void);border-top:1px solid var(--border);}
+.founder-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
+.founder-photo{width:100%;aspect-ratio:3/4;background:var(--lift);border:1px solid var(--border2);border-radius:16px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;}
+.founder-photo-placeholder{font-family:"Clash Display",sans-serif;font-weight:700;font-size:5rem;color:var(--gold);opacity:.3;letter-spacing:-.04em;user-select:none;}
+.founder-photo-label{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;background:linear-gradient(transparent,rgba(6,6,8,.9));font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+.founder-photo-wrap{position:relative;}
+.founder-accent-box{position:absolute;bottom:-1.5rem;left:-1.5rem;width:110px;height:110px;border:1px solid var(--gold-border);border-radius:12px;background:var(--gold-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;backdrop-filter:blur(8px);}
+.fab-num{font-family:"Clash Display",sans-serif;font-weight:700;font-size:1.5rem;color:var(--gold);line-height:1;}
+.fab-label{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+.founder-name{font-family:"Clash Display",sans-serif;font-weight:700;font-size:2.2rem;letter-spacing:-.03em;line-height:1.05;margin-bottom:.35rem;}
+.founder-role{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:2rem;}
+.founder-bio{font-size:.95rem;color:var(--muted);line-height:1.85;margin-bottom:2rem;}
+.founder-bio strong{color:var(--text);font-weight:600;}
+.f-links{display:flex;flex-direction:column;gap:.65rem;margin-bottom:2rem;}
+.f-link{display:inline-flex;align-items:center;gap:10px;font-size:.82rem;color:var(--muted);border:1px solid var(--border);border-radius:var(--r);padding:.6rem 1rem;transition:all .2s;width:fit-content;}
+.f-link:hover{border-color:var(--gold-border);color:var(--gold);background:var(--gold-bg);}
+.f-link-icon{width:20px;height:20px;flex-shrink:0;font-size:.85rem;display:grid;place-items:center;}
+.f-link-sub{font-size:.7rem;color:var(--faint);margin-left:auto;padding-left:1rem;}
+.founder-traits{display:flex;flex-wrap:wrap;gap:6px;}
+.founder-trait{font-size:.66rem;padding:3px 11px;border-radius:99px;border:1px solid var(--border2);color:var(--faint);letter-spacing:.06em;text-transform:uppercase;font-weight:500;}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  nav{padding:0 1.5rem;}
+  .nav-links{display:none;}
+  section{padding:5rem 1.5rem;}
+  .hero{padding:7rem 1.5rem 4rem;}
+  .thesis-grid,.portfolio-cards,.approach-grid,.contact-grid{grid-template-columns:1fr;}
+  .portfolio-cards{background:none;gap:1rem;}
+  .approach-grid{background:none;gap:1rem;}
+  .hero-stats{flex-wrap:wrap;}
+  .hero-stat{min-width:50%;border-right:none;border-bottom:1px solid var(--border);}
+  footer{padding:2rem 1.5rem;flex-direction:column;align-items:flex-start;}
+}
+</style>
 </head>
+<body>
 
-<body id="top">
-  <div class="wrap">
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
 
-    <header class="topbar" role="banner">
-      <div class="topbar__inner">
-        <a class="brand" href="./index.html" aria-label="Bronsaer Capital">
-          <img class="brand__mark" src="./logo-bc.svg" alt="BC">
-          <div class="brand__meta">AMSTERDAM-BASED · WILLEMSPARK · FONDS IN OPBOUW</div>
-        </a>
-
-        <nav class="nav" aria-label="Hoofdnavigatie">
-          <a class="nav__link is-active" href="./index.html">Home</a>
-          <a class="nav__link" href="./strategie.html">Strategie</a>
-          <a class="nav__link" href="./intake.html">Intake</a>
-          <a class="nav__link" href="./over.html">Over</a>
-          <a class="nav__link" href="./disclaimer.html">Disclaimer</a>
-
-          <a class="btn" href="./intake.html#formulier">Intake aanvragen</a>
-        </nav>
-      </div>
-    </header>
-
-    <main class="page">
-      <div class="container">
-
-        <!-- HERO HOME -->
-        <section class="hero" aria-label="Intro">
-          <div>
-            <p class="hero__kicker">Willemspark · Amsterdam</p>
-
-            <h1 class="hero__title">Bronsaer Capital</h1>
-
-            <p class="hero__lead">
-              Bronsaer Capital is een Amsterdam-based fonds in opbouw met focus op shorts in structureel overgewaardeerde
-              bedrijven en sectoren, gecombineerd met stabiliserende exposures en strikt risicobeheer.
-            </p>
-
-            <p class="hero__lead">
-              De benadering is defensief van aard: kapitaalbehoud, liquiditeit en discipline staan centraal. Rendement
-              wordt nagestreefd vanuit asymmetrische kansen, niet vanuit maximale blootstelling.
-            </p>
-
-            <!-- microtekst BOVEN de knoppen -->
-            <p class="hero__micro">
-              Eerste online presentatie vanuit Willemspark. Trackrecord en documentatie worden gefaseerd toegevoegd en gedeeld na intake.
-            </p>
-
-            <div class="hero__actions">
-              <a class="btn" href="./strategie.html">Bekijk strategie</a>
-              <a class="btn btn--ghost" href="./intake.html">Intake & criteria</a>
-            </div>
-
-            <!-- 3 kernpunten (compact, professioneel) -->
-            <div class="features" aria-label="Kernpunten">
-              <div class="feature">
-                <div class="feature__label">Positionering</div>
-                <p class="feature__text">
-                  Focus op inefficiënties, overwaardering en narrative risk. Selectie op basis van fundamentals en uitvoerbaarheid.
-                </p>
-              </div>
-
-              <div class="feature">
-                <div class="feature__label">Risicobeheer</div>
-                <p class="feature__text">
-                  Position sizing, limieten, liquiditeitschecks en een stabiliserende ETF-laag ter demping van volatiliteit.
-                </p>
-              </div>
-
-              <div class="feature">
-                <div class="feature__label">Proces</div>
-                <p class="feature__text">
-                  Fonds in opbouw. Verdere details volgen na intake en geschiktheidsbeoordeling — geen publieke claims, wel structuur.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Elegant groot logo (niet BOEM) -->
-          <div class="hero__markwrap" aria-hidden="true">
-            <div class="hero__mark">
-              <img src="./logo-bc.svg" alt="">
-            </div>
-          </div>
-        </section>
-
-        <section class="section" aria-label="Samenvatting en contact">
-          <div class="grid">
-            <article class="card">
-              <h2>Strategie (samenvatting)</h2>
-              <p>
-                Het fonds richt zich op het identificeren van structurele overwaardering en inefficiënties, met een conservatieve aanpak op
-                risico en liquiditeit.
-              </p>
-              <ul class="bullets">
-                <li>Shortselectie op fundamentele waardering, katalysatoren en marktdynamiek</li>
-                <li>ETF-component ter stabilisatie en concentratiebeperking</li>
-                <li>Liquiditeit/marge-management via liquide instrumenten</li>
-              </ul>
-              <p class="mt-14">
-                <a class="link" href="./strategie.html">Lees de volledige strategie →</a>
-              </p>
-            </article>
-
-            <article class="card">
-              <h2>Intake</h2>
-              <p>
-                Deelname is uitsluitend mogelijk na een persoonlijk intakegesprek en beoordeling van geschiktheid.
-              </p>
-
-              <div class="contact">
-                <div>
-                  <div class="label">E-mail</div>
-                  <a class="link" href="mailto:contact@bronsaercapital.com">contact@bronsaercapital.com</a>
-                </div>
-                <div>
-                  <div class="label">Locatie</div>
-                  <div class="value">Amsterdam, Nederland</div>
-                </div>
-              </div>
-
-              <a class="btn" href="mailto:contact@bronsaercapital.com?subject=Intake%20aanvraag%20Bronsaer%20Capital&body=Naam:%0D%0AOrganisatie:%0D%0AErvaring:%0D%0AIndicatie%20horizon:%0D%0AReden%20voor%20intake:%0D%0A">
-                → Intake aanvragen
-              </a>
-
-              <p class="note">
-                Aanmeldingen worden beoordeeld op geschiktheid. Bronsaer Capital behoudt zich het recht voor om contactverzoeken niet in behandeling te nemen.
-              </p>
-            </article>
-          </div>
-        </section>
-
-      </div>
-    </main>
-
-    <footer class="footer" aria-label="Footer">
-      <div class="container">
-        <h3>Disclaimer</h3>
-        <p>
-          De informatie op deze website is uitsluitend bedoeld voor informatieve doeleinden en vormt geen aanbod,
-          uitnodiging of aanbeveling. Beleggen brengt risico’s met zich mee. Resultaten uit het verleden bieden geen garantie voor de toekomst.
-        </p>
-        <div class="footer__meta">© <span id="year"></span> Bronsaer Capital — Amsterdam</div>
-      </div>
-    </footer>
-
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-mark">BC</div>
+    Bronsaer Capital
+    <span class="nav-pill">Venture</span>
   </div>
+  <div class="nav-links">
+    <a href="#thesis">Thesis</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#founder">Founder</a>
+    <a href="#approach">Approach</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Get in touch →</a>
+</nav>
 
-  <!-- Inline behavior AFTER DOM exists -->
-  <script>
-    (function(){
-      const btn = document.getElementById("navIntakeStart");
-      const target = document.getElementById("formulier");
-      if (!btn || !target) return;
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
 
-      btn.addEventListener("click", function(e){
-        e.preventDefault();
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-        history.replaceState(null, "", "#formulier");
-      });
-    })();
-  </script>
+  <div class="hero-inner">
+    <div class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      Amsterdam · B2B SaaS Venture Builder
+    </div>
 
-  <script src="./script.js"></script>
+    <h1>
+      <span class="line"><span>We build</span></span>
+      <span class="line"><span><em>category-defining</em></span></span>
+      <span class="line"><span>SaaS companies.</span></span>
+    </h1>
+
+    <p class="hero-sub">
+      Bronsaer Capital identifies fragmented European markets where the incumbent software is broken or nonexistent — and builds the platform that dominates it.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn-primary">
+        View portfolio
+        <span style="font-size:.9rem;">→</span>
+      </a>
+      <a href="#thesis" class="btn-ghost">
+        Our thesis
+        <span class="btn-arrow">↓</span>
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="stat-num">20<span class="accent">25</span></div>
+        <div class="stat-label">Founded · Amsterdam</div>
+      </div>
+      <div class="hero-stat" style="padding-left:3rem;">
+        <div class="stat-num">B2B <span class="accent">SaaS</span></div>
+        <div class="stat-label">Focus · Vertical markets</div>
+      </div>
+      <div class="hero-stat" style="padding-left:3rem;">
+        <div class="stat-num"><span class="accent">EU</span></div>
+        <div class="stat-label">Target market · Europe first</div>
+      </div>
+      <div class="hero-stat" style="padding-left:3rem;">
+        <div class="stat-num">1<span style="font-size:1.2rem;color:var(--faint);"> active</span></div>
+        <div class="stat-label">Venture · in market now</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item">B2B SaaS <span class="marquee-sep"></span> Vertical Markets <span class="marquee-sep"></span> Amsterdam <span class="marquee-sep"></span> Europe <span class="marquee-sep"></span> Marketplace + SaaS <span class="marquee-sep"></span> Bootstrapped to Proof <span class="marquee-sep"></span> Category Creation <span class="marquee-sep"></span> Network Effects <span class="marquee-sep"></span> B2B SaaS <span class="marquee-sep"></span> Vertical Markets <span class="marquee-sep"></span> Amsterdam <span class="marquee-sep"></span> Europe <span class="marquee-sep"></span> Marketplace + SaaS <span class="marquee-sep"></span> Bootstrapped to Proof <span class="marquee-sep"></span> Category Creation <span class="marquee-sep"></span> Network Effects <span class="marquee-sep"></span></div>
+  </div>
+</div>
+
+<!-- THESIS -->
+<section class="thesis" id="thesis">
+  <div class="container">
+    <div class="thesis-grid">
+      <div class="thesis-left reveal">
+        <div class="section-eye">Investment Thesis</div>
+        <h2>We find markets where operators are still running on Excel.</h2>
+        <p>Most vertical SaaS opportunities aren't in Silicon Valley — they're in the unglamorous, overlooked industries that employ millions of Europeans and still manage everything with spreadsheets, WhatsApp, and phone calls.</p>
+        <p>We build the software they never had. Then we add the marketplace layer that makes both sides of the market depend on us. That's how you build a moat.</p>
+      </div>
+      <div class="thesis-pillars reveal">
+        <div class="pillar">
+          <div class="pillar-num">01</div>
+          <div>
+            <div class="pillar-title">Fragmented, unsexy markets</div>
+            <div class="pillar-desc">If a market is boring enough that no VC has touched it, that's a signal. No competition, desperate operators, and a clear path to category ownership.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">02</div>
+          <div>
+            <div class="pillar-title">SaaS first, marketplace second</div>
+            <div class="pillar-desc">Charge operators for software that saves them hours per week. The marketplace layer then locks in both sides and creates network effects money can't buy.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">03</div>
+          <div>
+            <div class="pillar-title">Build before raising</div>
+            <div class="pillar-desc">We bootstrap to proof. Revenue, retention, NPS — then we raise from a position of strength. Giving away 25% of something unproven is a tax on impatience.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">04</div>
+          <div>
+            <div class="pillar-title">Netherlands first, then Europe</div>
+            <div class="pillar-desc">Dominate one market deeply before expanding. A platform with 90% penetration in one country is more valuable than 5% everywhere.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio-section" id="portfolio">
+  <div class="container">
+    <div class="portfolio-header reveal">
+      <div>
+        <div class="section-eye">Portfolio</div>
+        <h2>Current ventures</h2>
+      </div>
+      <div class="portfolio-count">01</div>
+    </div>
+
+    <div class="portfolio-cards reveal">
+      <!-- CamperVault -->
+      <div class="port-card">
+        <div class="port-card-inner">
+          <div class="port-status status-live">Live · Building</div>
+          <div class="port-logo">CV</div>
+          <div class="port-name">CamperVault</div>
+          <div class="port-domain">campervault.eu · campervault.nl</div>
+          <div class="port-desc">
+            The first B2B SaaS platform for camper and caravan storage operators in Europe. 640,000 registered campers in the Netherlands alone — all managed by operators running on Excel, WhatsApp, and phone calls. CamperVault replaces that with software for waitlist management, scheduling, invoicing, digital contracts, and group insurance. The marketplace layer then connects operators to new customers, creating two-sided lock-in.
+          </div>
+          <div class="port-tags">
+            <span class="port-tag highlight">B2B SaaS</span>
+            <span class="port-tag highlight">Marketplace</span>
+            <span class="port-tag">Netherlands → EU</span>
+            <span class="port-tag">Vertical Software</span>
+            <span class="port-tag">2025</span>
+          </div>
+          <a href="https://campervault.eu" class="port-link" target="_blank">
+            Visit platform →
+          </a>
+        </div>
+      </div>
+
+      <!-- Next -->
+      <div class="port-card port-placeholder">
+        <div class="port-card-inner">
+          <div class="port-status status-next">In exploration</div>
+          <div class="port-qs">?</div>
+          <div class="port-name" style="color:var(--faint)">Venture II</div>
+          <div class="port-domain" style="color:var(--border2)">Identifying the market</div>
+          <div class="port-desc" style="color:var(--faint)">
+            Same pattern. Different market. An industry where operators are invisible online, manage everything manually, and have never been offered real software. We're looking for it now.
+            <br><br>
+            If you operate in a market that fits this profile and want to co-build — reach out.
+          </div>
+          <div class="port-tags">
+            <span class="port-tag">B2B SaaS</span>
+            <span class="port-tag">TBD</span>
+            <span class="port-tag">Europe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="approach-section" id="approach">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eye">How we work</div>
+      <h2>The build playbook.</h2>
+    </div>
+    <div class="approach-grid reveal">
+      <div class="approach-card">
+        <div class="approach-num">01</div>
+        <div class="approach-title">Find the Excel market</div>
+        <div class="approach-desc">We look for operators with 10–500 customers who still manage everything manually. No good software exists. The market is big enough to matter, small enough that no VC has noticed.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">02</div>
+        <div class="approach-title">Build the software</div>
+        <div class="approach-desc">We build lean, focused operator software that solves the 3–5 core problems. Agenda. Waitlist. Invoicing. Contracts. Make it so good they can't imagine going back to Excel.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">03</div>
+        <div class="approach-title">Add the marketplace</div>
+        <div class="approach-desc">Once operators are locked in by software, we add consumer-facing search and discovery. Now both sides of the market need us. Network effects compound. Churn becomes structurally impossible.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">04</div>
+        <div class="approach-title">Prove before raising</div>
+        <div class="approach-desc">We bootstrap until the numbers tell the story. €10k MRR, 90%+ retention, NPS above 50. Then we raise — or we sell. Either way we negotiate from strength, not hope.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">05</div>
+        <div class="approach-title">Expand the stack</div>
+        <div class="approach-desc">Payments, insurance, financing, logistics — every adjacent service we add increases ARPU and deepens lock-in. The goal is to become the operating system for the vertical.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">06</div>
+        <div class="approach-title">Cross the border</div>
+        <div class="approach-desc">Netherlands first. Then Belgium, Germany, France. The playbook is the same in every market. Local sales, local operators, same product. Repeatability is the moat.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder-section" id="founder">
+  <div class="container">
+    <div class="founder-grid">
+      <div class="founder-photo-wrap reveal">
+        <div class="founder-photo">
+          <!-- PHOTO: replace with your actual photo when ready -->
+          <!-- <img src="christian-bronsaer.jpg" alt="Christian Bronsaer" style="width:100%;height:100%;object-fit:cover;"> -->
+          <div class="founder-photo-placeholder">CB</div>
+          <div class="founder-photo-label">Christian Bronsaer · Founder & CEO</div>
+          <div style="position:absolute;top:1.25rem;right:1.25rem;width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite;"></div>
+        </div>
+        <div class="founder-accent-box">
+          <div class="fab-num">2025</div>
+          <div class="fab-label">Founded</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="section-eye">Founder</div>
+        <div class="founder-name">Christian Bronsaer</div>
+        <div class="founder-role">Founder & CEO · Bronsaer Capital</div>
+        <div class="founder-bio">
+          <p>A background in accounting gives you something most founders don't have: a clear view of how businesses actually work. Cash flows, business models, margin structures, market dynamics — Christian developed a sharp eye for all of it working across a wide range of companies and sectors.</p>
+          <br>
+          <p>That financial perspective revealed a repeating pattern: <strong>large, fragmented markets where operators manage everything manually</strong> — no software, no automation, no digital presence. The opportunity is always the same. The execution is where most people stop.</p>
+          <br>
+          <p>Bronsaer Capital is built on the conviction that the best B2B SaaS companies aren't found in Silicon Valley — they're found in the overlooked, unglamorous markets that employ millions of Europeans. First venture: <strong>CamperVault</strong>, the operating system for camper and caravan storage across Europe.</p>
+        </div>
+        <div class="f-links">
+          <a href="https://linkedin.com/in/christian-bronsaer" target="_blank" class="f-link">
+            <span class="f-link-icon">in</span>
+            <span style="font-weight:500;">Christian Bronsaer</span>
+            <span class="f-link-sub">Personal LinkedIn →</span>
+          </a>
+          <a href="https://linkedin.com/company/bronsaercapital" target="_blank" class="f-link">
+            <span class="f-link-icon">in</span>
+            <span style="font-weight:500;">Bronsaer Capital</span>
+            <span class="f-link-sub">Company page →</span>
+          </a>
+          <a href="https://campervault.eu" target="_blank" class="f-link">
+            <span class="f-link-icon">⬡</span>
+            <span style="font-weight:500;">CamperVault.eu</span>
+            <span class="f-link-sub">First venture →</span>
+          </a>
+          <a href="mailto:christian@bronsaercapital.com" class="f-link">
+            <span class="f-link-icon">@</span>
+            <span style="font-weight:500;">christian@bronsaercapital.com</span>
+            <span class="f-link-sub">Direct contact →</span>
+          </a>
+        </div>
+        <div class="founder-traits">
+          <span class="founder-trait">Accountancy</span>
+          <span class="founder-trait">Business Models</span>
+          <span class="founder-trait">B2B SaaS</span>
+          <span class="founder-trait">Venture Building</span>
+          <span class="founder-trait">Amsterdam</span>
+          <span class="founder-trait">Noord-Holland</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left reveal">
+        <div class="section-eye">Contact</div>
+        <h2>Let's talk.</h2>
+        <p>Whether you're an operator who wants early access to one of our platforms, a potential co-builder, or someone sitting on a market problem worth solving — we want to hear from you.</p>
+        <div class="contact-details">
+          <div class="cd">
+            <div class="cd-label">Email</div>
+            <div class="cd-val"><a href="mailto:christian@bronsaercapital.com">christian@bronsaercapital.com</a></div>
+          </div>
+          <div class="cd">
+            <div class="cd-label">Location</div>
+            <div class="cd-val">Amsterdam, Netherlands</div>
+          </div>
+          <div class="cd">
+            <div class="cd-label">LinkedIn</div>
+            <div class="cd-val"><a href="https://linkedin.com/company/bronsaercapital">Bronsaer Capital</a></div>
+          </div>
+          <div class="cd">
+            <div class="cd-label">Active venture</div>
+            <div class="cd-val"><a href="https://campervault.eu">CamperVault.eu →</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="contact-form" id="bc-form">
+          <div class="cf-row">
+            <input class="cf-field" type="text" placeholder="Name" id="cf-name">
+            <input class="cf-field" type="email" placeholder="Email" id="cf-email">
+          </div>
+          <select class="cf-field" id="cf-subject" style="background:#0C0C10;color:rgba(250,250,249,.45)">
+            <option value="">What's this about?</option>
+            <option style="background:#131318;color:#fafaf9">Join CamperVault as storage operator</option>
+            <option style="background:#131318;color:#fafaf9">Co-build / partnership inquiry</option>
+            <option style="background:#131318;color:#fafaf9">Market opportunity</option>
+            <option style="background:#131318;color:#fafaf9">Investment discussion</option>
+            <option style="background:#131318;color:#fafaf9">Other</option>
+          </select>
+          <textarea class="cf-field" placeholder="Tell us more..." id="cf-message"></textarea>
+          <button class="cf-submit" onclick="submitForm()">Send message</button>
+        </div>
+        <div class="cf-success" id="cf-success">
+          ✓ Message received. We'll respond within 24 hours.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="footer-mark">BC</div>
+    Bronsaer Capital
+  </div>
+  <div class="footer-links">
+    <a href="#thesis">Thesis</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#founder">Founder</a>
+    <a href="#approach">Approach</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div style="display:flex;gap:1.25rem;flex-wrap:wrap;">
+    <a href="https://linkedin.com/company/bronsaercapital" target="_blank" style="font-size:.72rem;color:var(--faint);letter-spacing:.04em;transition:color .15s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--faint)'">LinkedIn Company</a>
+    <a href="https://linkedin.com/in/christian-bronsaer" target="_blank" style="font-size:.72rem;color:var(--faint);letter-spacing:.04em;transition:color .15s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--faint)'">LinkedIn Founder</a>
+    <a href="https://campervault.eu" target="_blank" style="font-size:.72rem;color:var(--faint);letter-spacing:.04em;transition:color .15s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--faint)'">CamperVault.eu</a>
+    <a href="mailto:christian@bronsaercapital.com" style="font-size:.72rem;color:var(--faint);letter-spacing:.04em;transition:color .15s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--faint)'">Email</a>
+  </div>
+  <p>© 2025 Bronsaer Capital · Amsterdam, Netherlands · B2B SaaS Venture Builder</p>
+</footer>
+
+<script>
+/* Custom cursor */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  setTimeout(() => {
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  }, 80);
+});
+
+/* Scroll reveal */
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+/* Form */
+function submitForm() {
+  const name = document.getElementById('cf-name').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const msg = document.getElementById('cf-message').value.trim();
+  if (!name || !email || !msg) { alert('Please fill in all fields.'); return; }
+  document.getElementById('bc-form').style.display = 'none';
+  document.getElementById('cf-success').style.display = 'block';
+}
+</script>
 </body>
 </html>
